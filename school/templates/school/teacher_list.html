@@ -1,0 +1,25 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+<h2>Teachers</h2>
+<p><a href="{% url 'add_teacher' %}">Add Teacher</a></p>
+<table border="1" cellpadding="5" cellspacing="0">
+<thead>
+<tr><th>Full Name</th><th>Subject</th><th>Actions</th></tr>
+</thead>
+<tbody>
+{% for t in teachers %}
+<tr>
+<td>{{ t.full_name }}</td>
+<td>{{ t.uroks.name }}</td>
+<td>
+<a href="{% url 'edit_teacher' t.pk %}">Edit</a> |
+<a href="{% url 'delete_teacher' t.pk %}">Delete</a>
+</td>
+</tr>
+{% empty %}
+<tr><td colspan="3">No teachers found.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
