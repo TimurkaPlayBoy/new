@@ -25,3 +25,10 @@ urlpatterns += [
     path('grades/add/', views.add_grade, name='add_grade'),
     path('schedule/add/', views.add_schedule, name='add_schedule'),
 ]
+
+urlpatterns += [
+    path('grades/edit/<int:pk>/', views.edit_grade, name='edit_grade'),
+    path('grades/delete/<int:pk>/', views.delete_grade, name='delete_grade'),
+    path('schedule/edit/<int:pk>/', views.edit_schedule, name='edit_schedule'),
+    path('schedule/delete/<int:pk>/', views.delete_schedule, name='delete_schedule'),
+]

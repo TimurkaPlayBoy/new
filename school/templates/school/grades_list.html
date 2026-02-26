@@ -1,6 +1,8 @@
 {% extends 'school/base.html' %}
 
 {% block content %}
+<a href="{% url 'add_grade' %}">Add Grade</a>  <!-- для grades_list -->
+<a href="{% url 'add_schedule' %}">Add Schedule</a>  <!-- для schedule_list -->
 <h2>Grades</h2>
 <table border="1">
     <tr>
@@ -16,4 +18,29 @@
     </tr>
     {% endfor %}
 </table>
+{% for grade in grades %}
+<tr>
+    <td>{{ grade.student }}</td>
+    <td>{{ grade.uroks }}</td>
+    <td>{{ grade.value }}</td>
+    <td>
+        <a href="{% url 'edit_grade' grade.pk %}">Edit</a> |
+        <a href="{% url 'delete_grade' grade.pk %}">Delete</a>
+    </td>
+</tr>
+{% endfor %}
+
+{% for schedule in schedules %}
+<tr>
+    <td>{{ schedule.school_class }}</td>
+    <td>{{ schedule.uroks }}</td>
+    <td>{{ schedule.teacher }}</td>
+    <td>{{ schedule.day_of_week }}</td>
+    <td>{{ schedule.lesson_number }}</td>
+    <td>
+        <a href="{% url 'edit_schedule' schedule.pk %}">Edit</a> |
+        <a href="{% url 'delete_schedule' schedule.pk %}">Delete</a>
+    </td>
+</tr>
+{% endfor %}
 {% endblock %}
