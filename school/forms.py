@@ -16,7 +16,7 @@ class UroksForm(forms.ModelForm):
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['full_name', 'uroks']
+        fields = ['name', 'subject']
 
 class StudentForm(forms.ModelForm):
     class Meta:
