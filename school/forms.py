@@ -1,7 +1,5 @@
 from django import forms
-from .models import Grade, Schedule
-from django import forms
-from .models import Class, Uroks, Teacher, Student
+from .models import Class, Uroks, Teacher, Student, Grade, Schedule
 
 class ClassForm(forms.ModelForm):
     class Meta:
@@ -21,7 +19,7 @@ class TeacherForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['full_name', 'school_class']
+        fields = ['name', 'school_class']  # виправлено: full_name → name
 
 class GradeForm(forms.ModelForm):
     class Meta:
