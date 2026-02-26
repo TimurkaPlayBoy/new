@@ -14,6 +14,165 @@ from .models import Grade, Schedule
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Class, Uroks, Teacher, Student
 from .forms import ClassForm, UroksForm, TeacherForm, StudentForm
+# school/views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Class, Uroks, Teacher, Student, Grade, Schedule
+from .forms import ClassForm, UroksForm, TeacherForm, StudentForm, GradeForm, ScheduleForm
+
+# ----------------- Class -----------------
+def class_list(request):
+    classes = Class.objects.all()
+    return render(request, 'class_list.html', {'classes': classes})
+
+def class_add(request):
+    form = ClassForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('class_list')
+    return render(request, 'class_form.html', {'form': form})
+
+def class_edit(request, pk):
+    obj = get_object_or_404(Class, pk=pk)
+    form = ClassForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('class_list')
+    return render(request, 'class_form.html', {'form': form})
+
+def class_delete(request, pk):
+    obj = get_object_or_404(Class, pk=pk)
+    obj.delete()
+    return redirect('class_list')
+
+
+# ----------------- Uroks -----------------
+def uroks_list(request):
+    uroks_list = Uroks.objects.all()
+    return render(request, 'uroks_list.html', {'uroks_list': uroks_list})
+
+def uroks_add(request):
+    form = UroksForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('uroks_list')
+    return render(request, 'uroks_form.html', {'form': form})
+
+def uroks_edit(request, pk):
+    obj = get_object_or_404(Uroks, pk=pk)
+    form = UroksForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('uroks_list')
+    return render(request, 'uroks_form.html', {'form': form})
+
+def uroks_delete(request, pk):
+    obj = get_object_or_404(Uroks, pk=pk)
+    obj.delete()
+    return redirect('uroks_list')
+
+
+# ----------------- Teacher -----------------
+def teacher_list(request):
+    teachers = Teacher.objects.all()
+    return render(request, 'teacher_list.html', {'teachers': teachers})
+
+def teacher_add(request):
+    form = TeacherForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('teacher_list')
+    return render(request, 'teacher_form.html', {'form': form})
+
+def teacher_edit(request, pk):
+    obj = get_object_or_404(Teacher, pk=pk)
+    form = TeacherForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('teacher_list')
+    return render(request, 'teacher_form.html', {'form': form})
+
+def teacher_delete(request, pk):
+    obj = get_object_or_404(Teacher, pk=pk)
+    obj.delete()
+    return redirect('teacher_list')
+
+
+# ----------------- Student -----------------
+def student_list(request):
+    students = Student.objects.all()
+    return render(request, 'student_list.html', {'students': students})
+
+def student_add(request):
+    form = StudentForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('student_list')
+    return render(request, 'student_form.html', {'form': form})
+
+def student_edit(request, pk):
+    obj = get_object_or_404(Student, pk=pk)
+    form = StudentForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('student_list')
+    return render(request, 'student_form.html', {'form': form})
+
+def student_delete(request, pk):
+    obj = get_object_or_404(Student, pk=pk)
+    obj.delete()
+    return redirect('student_list')
+
+
+# ----------------- Grade -----------------
+def grade_list(request):
+    grades = Grade.objects.all()
+    return render(request, 'grade_list.html', {'grades': grades})
+
+def grade_add(request):
+    form = GradeForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('grade_list')
+    return render(request, 'grade_form.html', {'form': form})
+
+def grade_edit(request, pk):
+    obj = get_object_or_404(Grade, pk=pk)
+    form = GradeForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('grade_list')
+    return render(request, 'grade_form.html', {'form': form})
+
+def grade_delete(request, pk):
+    obj = get_object_or_404(Grade, pk=pk)
+    obj.delete()
+    return redirect('grade_list')
+
+
+# ----------------- Schedule -----------------
+def schedule_list(request):
+    schedules = Schedule.objects.all()
+    return render(request, 'schedule_list.html', {'schedules': schedules})
+
+def schedule_add(request):
+    form = ScheduleForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('schedule_list')
+    return render(request, 'schedule_form.html', {'form': form})
+
+def schedule_edit(request, pk):
+    obj = get_object_or_404(Schedule, pk=pk)
+    form = ScheduleForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('schedule_list')
+    return render(request, 'schedule_form.html', {'form': form})
+
+def schedule_delete(request, pk):
+    obj = get_object_or_404(Schedule, pk=pk)
+    obj.delete()
+    return redirect('schedule_list')
 
 # --- Class ---
 def class_list(request):
