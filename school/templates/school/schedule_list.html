@@ -1,49 +1,47 @@
 {% extends 'school/base.html' %}
 
 {% block content %}
-<h2>Schedule</h2>
-<a href="{% url 'add_grade' %}">Add Grade</a>  <!-- для grades_list -->
-<a href="{% url 'add_schedule' %}">Add Schedule</a>  <!-- для schedule_list -->
-<table border="1">
-    <tr>
-        <th>Class</th>
-        <th>Uroks</th>
-        <th>Teacher</th>
-        <th>Day</th>
-        <th>Lesson #</th>
-    </tr>
-    {% for s in schedules %}
-    <tr>
-        <td>{{ s.school_class.name }}</td>
-        <td>{{ s.uroks.name }}</td>
-        <td>{{ s.teacher.name }}</td>
-        <td>{{ s.day_of_week }}</td>
-        <td>{{ s.lesson_number }}</td>
-    </tr>
-    {% endfor %}
+<h2>Schedule List</h2>
+
+<!-- Пошук -->
+<form method="get">
+    <input type="text" name="q" placeholder="Search by class, subject or teacher" value="{{ query|default:'' }}">
+    <button type="submit">Search</button>
+</form>
+
+<!-- Додати новий розклад -->
+<p><a href="{% url 'add_schedule' %}">Add Schedule</a></p>
+
+<!-- Таблиця розкладу -->
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Day of Week</th>
+            <th>Lesson Number</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.school_class.name }}</td>
+            <td>{{ schedule.uroks.name }}</td>
+            <td>{{ schedule.teacher.full_name }}</td>
+            <td>{{ schedule.day_of_week }}</td>
+            <td>{{ schedule.lesson_number }}</td>
+            <td>
+                <a href="{% url 'edit_schedule' schedule.pk %}">Edit</a> |
+                <a href="{% url 'delete_schedule' schedule.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No schedule found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
-{% for grade in grades %}
-<tr>
-    <td>{{ grade.student }}</td>
-    <td>{{ grade.uroks }}</td>
-    <td>{{ grade.value }}</td>
-    <td>
-        <a href="{% url 'edit_grade' grade.pk %}">Edit</a> |
-        <a href="{% url 'delete_grade' grade.pk %}">Delete</a>
-    </td>
-</tr>
-{% endfor %}
-{% for schedule in schedules %}
-<tr>
-    <td>{{ schedule.school_class }}</td>
-    <td>{{ schedule.uroks }}</td>
-    <td>{{ schedule.teacher }}</td>
-    <td>{{ schedule.day_of_week }}</td>
-    <td>{{ schedule.lesson_number }}</td>
-    <td>
-        <a href="{% url 'edit_schedule' schedule.pk %}">Edit</a> |
-        <a href="{% url 'delete_schedule' schedule.pk %}">Delete</a>
-    </td>
-</tr>
-{% endfor %}
 {% endblock %}

@@ -9,6 +9,31 @@ from .models import Schedule, Grade
 from django.shortcuts import render, redirect
 from .forms import GradeForm, ScheduleForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from .models import Grade, Schedule
+
+def grades_list(request):
+    query = request.GET.get('q')
+    if query:
+        grades = Grade.objects.filter(
+            Q(student__full_name__icontains=query) |
+            Q(uroks__name__icontains=query)
+        )
+    else:
+        grades = Grade.objects.all()
+    return render(request, 'school/grades_list.html', {'grades': grades, 'query': query})
+
+def schedule_list(request):
+    query = request.GET.get('q')
+    if query:
+        schedules = Schedule.objects.filter(
+            Q(school_class__name__icontains=query) |
+            Q(uroks__name__icontains=query) |
+            Q(teacher__full_name__icontains=query)
+        )
+    else:
+        schedules = Schedule.objects.all()
+    return render(request, 'school/schedule_list.html', {'schedules': schedules, 'query': query})
 
 # --- Grades ---
 def edit_grade(request, pk):
