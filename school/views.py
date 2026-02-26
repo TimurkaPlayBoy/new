@@ -4,6 +4,19 @@ from .serializers import (
     UroksSerializer, TeacherSerializer, ClassSerializer, StudentSerializer,
     ScheduleSerializer, GradeSerializer
 )
+from django.shortcuts import render
+from .models import Schedule, Grade
+
+def index(request):
+    return render(request, 'school/index.html')
+
+def schedule_list(request):
+    schedules = Schedule.objects.all()
+    return render(request, 'school/schedule_list.html', {'schedules': schedules})
+
+def grades_list(request):
+    grades = Grade.objects.all()
+    return render(request, 'school/grades_list.html', {'grades': grades})
 
 class UroksViewSet(viewsets.ModelViewSet):
     queryset = Uroks.objects.all()
