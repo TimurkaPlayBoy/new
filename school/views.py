@@ -6,6 +6,28 @@ from .serializers import (
 )
 from django.shortcuts import render
 from .models import Schedule, Grade
+from django.shortcuts import render, redirect
+from .forms import GradeForm, ScheduleForm
+
+def add_grade(request):
+    if request.method == 'POST':
+        form = GradeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('grades_list')
+    else:
+        form = GradeForm()
+    return render(request, 'school/add_grade.html', {'form': form})
+
+def add_schedule(request):
+    if request.method == 'POST':
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('schedule_list')
+    else:
+        form = ScheduleForm()
+    return render(request, 'school/add_schedule.html', {'form': form})
 
 def index(request):
     return render(request, 'school/index.html')

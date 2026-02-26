@@ -5,6 +5,8 @@ from school.views import (
     StudentViewSet, ScheduleViewSet, GradeViewSet
 )
 from rest_framework import routers
+from django.urls import path
+from . import views
 
 router = routers.DefaultRouter()
 router.register(r'uroks', UroksViewSet)
@@ -17,4 +19,9 @@ router.register(r'grades', GradeViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('school.urls')),  # DRF API
+]
+
+urlpatterns += [
+    path('grades/add/', views.add_grade, name='add_grade'),
+    path('schedule/add/', views.add_schedule, name='add_schedule'),
 ]
